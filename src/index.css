@@ -1,0 +1,214 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #FAF8F5;
+  --ink: #311B56;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+}
+
+[data-theme="dark"] {
+  --cream: #1A1025;
+  --ink: #EAE3F2;
+}
+
+[data-theme="pure"] {
+  --cream: #000000;
+  --ink: #FFFFFF;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--cream);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--ink) 20%, transparent);
+  color: var(--ink);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* ==================================
+   FLIP CARD (Brutalist style)
+================================== */
+.flip-card {
+  position: relative;
+  perspective: 1000px;
+  background: transparent;
+  /* Shadow mộc mạc theo đúng web mẫu */
+  box-shadow: 4px 4px 0px 0px var(--ink);
+}
+
+.flip-half {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cream);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+}
+.flip-half.top {
+  top: 0;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--ink);
+}
+.flip-half.bottom {
+  bottom: 0;
+  align-items: flex-start;
+  border-top: 1px solid var(--ink);
+}
+
+.flip-digit {
+  font-family: var(--font-sans);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  /* Kích thước khổng lồ */
+  font-size: clamp(6rem, 16vw, 15rem);
+  /* Bóng đổ chữ bên trong card */
+  filter: drop-shadow(3px 3px 0px color-mix(in srgb, var(--ink) 20%, transparent));
+}
+
+.flip-half.top .flip-digit {
+  transform: translateY(50%);
+}
+.flip-half.bottom .flip-digit {
+  transform: translateY(-50%);
+}
+
+.flip-anim-top,
+.flip-anim-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: var(--cream);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+}
+.flip-anim-top {
+  top: 0;
+  align-items: flex-end;
+  transform-origin: bottom;
+  border-bottom: 1px solid var(--ink);
+  animation: flipTop 0.5s ease-in forwards;
+  z-index: 5;
+}
+.flip-anim-bottom {
+  bottom: 0;
+  align-items: flex-start;
+  transform-origin: top;
+  border-top: 1px solid var(--ink);
+  transform: rotateX(90deg);
+  animation: flipBottom 0.5s ease-out 0.5s forwards;
+  z-index: 5;
+}
+.flip-anim-top .flip-digit {
+  transform: translateY(50%);
+}
+.flip-anim-bottom .flip-digit {
+  transform: translateY(-50%);
+}
+
+@keyframes flipTop {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(-90deg);
+  }
+}
+@keyframes flipBottom {
+  0% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+/* ==================================
+   BUTTONS (Sao chép y hệt web mẫu)
+================================== */
+.btn-brut {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  background: var(--cream);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 4px 4px 0px var(--ink);
+  transition: all 0.2s ease-in-out;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+.btn-brut:hover {
+  background: var(--ink);
+  color: var(--cream);
+  box-shadow: 6px 6px 0px var(--ink);
+  transform: translate(-4px, -4px);
+}
+.btn-brut[data-active="true"] {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+/* Animations */
+.animate-zoom-in {
+  animation: zoomIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 14px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream);
+  border-left: 2px solid var(--ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ink);
+  border: 2px solid var(--cream);
+}
